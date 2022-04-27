@@ -2,7 +2,7 @@
   "name": "base64-image-preview",
   "displayName": "base64-image-preview",
   "description": "View base64 encoded image by hover",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "publisher": "nate-scarlet",
   "engines": {
     "vscode": "^1.66.0"
