@@ -6,4 +6,4 @@
 
 View base64 encoded image by hover
 
-![demo.gif](./demo.gif)
+![demo.gif](https://raw.githubusercontent.com/NateScarlet/base64-image-preview/master/demo.gif)
