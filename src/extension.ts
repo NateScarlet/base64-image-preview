@@ -21,7 +21,7 @@ export function activate(ctx: vscode.ExtensionContext) {
 						return;
           }
 
-          if (match[0].length > 200000) {
+          if (match[0].length > 100000) {
             const panel = vscode.window.createWebviewPanel(
               'base64Image',
               'Image Preview',
