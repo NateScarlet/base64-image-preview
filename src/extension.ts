@@ -1,6 +1,25 @@
 import * as vscode from "vscode";
 
 export function activate(ctx: vscode.ExtensionContext) {
+  let base64image = '';
+
+  vscode.commands.registerCommand('openLargeImage', () => {
+    const panel = vscode.window.createWebviewPanel(
+      'base64Image', 
+      'Image Preview', 
+      vscode.ViewColumn.One, 
+      { enableScripts: false }
+    );
+    panel.webview.html = `<img src="${base64image}" style="max-width: 100%; max-height: 100vh; object-fit: contain;">`;
+
+    // close the panel when it's no longer focused
+    panel.onDidChangeViewState(e => {
+      if (panel.visible === false) {
+        panel.dispose();
+      }
+    });
+  });
+
   ctx.subscriptions.push(
     vscode.languages.registerHoverProvider(
       "*",
@@ -22,22 +41,10 @@ export function activate(ctx: vscode.ExtensionContext) {
           }
 
           if (match[0].length > 100000) {
-            const panel = vscode.window.createWebviewPanel(
-              'base64Image',
-              'Image Preview',
-              vscode.ViewColumn.One,
-              { enableScripts: false }
-            );
-	    panel.webview.html = `<img src="${match[0]}" style="max-width: 100%; max-height: 100vh; object-fit: contain;">`;
-
-            // close the panel when it's no longer focused
-            panel.onDidChangeViewState(e => {
-              if (panel.visible === false) {
-                panel.dispose(); 
-              }
-            });
-
-	    return;
+            base64image = match[0];
+            const hoverMessage = new vscode.MarkdownString(`[Open Image in New Tab](command:openLargeImage)`);
+            hoverMessage.isTrusted = true;
+            return new vscode.Hover(hoverMessage);
           }
 		
           return new vscode.Hover(
